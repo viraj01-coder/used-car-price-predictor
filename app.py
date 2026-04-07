@@ -62,7 +62,7 @@ st.subheader("Enter Car Details")
 
 col1, col2 = st.columns(2)
 with col1:
-    year = st.slider("Year of Manufacture", min_value=int(df['year'].min()), max_value=int(df['year'].max()), value=2018)
+    year = st.slider("Year of Manufacture", min_value=2000, max_value=2024, value=2018)
     mileage = st.number_input("Mileage (km)", min_value=0, max_value=300000, value=30000, step=1000)
     tax = st.number_input("Tax (£)", min_value=0, max_value=600, value=150)
 with col2:
@@ -99,7 +99,7 @@ col1, col2 = st.columns(2)
 
 # Chart 1: Year wise Average Price Trend (Line Chart)
 with col1:
-    year_avg = df.groupby('year')['price'].mean().reset_index()
+    year_avg = df[(df['year'] >= 2000) & (df['year'] <= 2024)].groupby('year')['price'].mean().reset_index()
     year_avg['price_converted'] = year_avg['price'] * rate
     fig1 = px.line(year_avg, x='year', y='price_converted',
                    title='📈 Year wise Average Price Trend',
