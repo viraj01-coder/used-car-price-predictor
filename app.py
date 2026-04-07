@@ -82,7 +82,7 @@ if st.button("🔍 Predict Price", use_container_width=True):
     mileage_avg_price = df[(df['mileage'] >= mileage_low) & (df['mileage'] <= mileage_high)]['price'].mean() * rate
     overall_avg = df['price'].mean() * rate
     diff_pct = ((predicted_price - overall_avg) / overall_avg) * 100
-    diff_text = f"{abs(diff_pct):.1f}% mehngi" if diff_pct > 0 else f"{abs(diff_pct):.1f}% sasti"
+    diff_text = f"{abs(diff_pct):.1f}% more expensive than" if diff_pct > 0 else f"{abs(diff_pct):.1f}% cheaper than"
 
     st.info(f"""**Analysis:**
 - A {year} car with {mileage:,} km mileage
@@ -91,10 +91,10 @@ if st.button("🔍 Predict Price", use_container_width=True):
 - Currency: {selected_currency}
 
 **📊 Dataset Comparison:**
-- {year} cars ki average price: **{symbol}{year_avg_price:,.0f}**
-- {mileage_low:,}–{mileage_high:,} km mileage cars ki avg price: **{symbol}{mileage_avg_price:,.0f}**
+- {year} cars average price: **{symbol}{year_avg_price:,.0f}**
+- {mileage_low:,}–{mileage_high:,} km mileage cars avg price: **{symbol}{mileage_avg_price:,.0f}**
 - Overall dataset average: **{symbol}{overall_avg:,.0f}**
-- Tumhari car dataset average se **{diff_text}** hai""")
+- Your car is **{diff_text}** the dataset average""")
 
 st.divider()
 st.markdown("### 📊 Key Findings from Analysis")
