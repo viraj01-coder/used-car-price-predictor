@@ -75,11 +75,26 @@ if st.button("🔍 Predict Price", use_container_width=True):
     predicted_price_gbp = max(0, model.predict(input_data)[0])
     predicted_price = predicted_price_gbp * rate
     st.success(f"### 💰 Estimated Price: {symbol}{predicted_price:,.0f}")
+
+    # Dataset comparison stats
+    year_avg_price = df[df['year'] == year]['price'].mean() * rate
+    mileage_low, mileage_high = max(0, mileage - 10000), mileage + 10000
+    mileage_avg_price = df[(df['mileage'] >= mileage_low) & (df['mileage'] <= mileage_high)]['price'].mean() * rate
+    overall_avg = df['price'].mean() * rate
+    diff_pct = ((predicted_price - overall_avg) / overall_avg) * 100
+    diff_text = f"{abs(diff_pct):.1f}% mehngi" if diff_pct > 0 else f"{abs(diff_pct):.1f}% sasti"
+
     st.info(f"""**Analysis:**
 - A {year} car with {mileage:,} km mileage
 - Engine: {engine_size}L | Fuel efficiency: {mpg} MPG
 - Model confidence (R²): **75.6%**
-- Currency: {selected_currency}""")
+- Currency: {selected_currency}
+
+**📊 Dataset Comparison:**
+- {year} cars ki average price: **{symbol}{year_avg_price:,.0f}**
+- {mileage_low:,}–{mileage_high:,} km mileage cars ki avg price: **{symbol}{mileage_avg_price:,.0f}**
+- Overall dataset average: **{symbol}{overall_avg:,.0f}**
+- Tumhari car dataset average se **{diff_text}** hai""")
 
 st.divider()
 st.markdown("### 📊 Key Findings from Analysis")
