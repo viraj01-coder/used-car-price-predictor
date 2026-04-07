@@ -136,15 +136,15 @@ with col3:
         fig3.update_layout(template='plotly_dark')
         st.plotly_chart(fig3, use_container_width=True)
 
-# Chart 4: Fuel Type Distribution (Bar Chart)
+# Chart 4: Fuel Type Distribution (Bar Chart - Petrol vs Diesel)
 with col4:
     if 'fuelType' in df.columns:
-        fuel_counts = df['fuelType'].value_counts().reset_index()
+        fuel_counts = df[df['fuelType'].isin(['Petrol', 'Diesel'])]['fuelType'].value_counts().reset_index()
         fuel_counts.columns = ['fuelType', 'count']
         fig4 = px.bar(fuel_counts, x='fuelType', y='count',
-                      title='⛽ Fuel Type Distribution',
+                      title='⛽ Petrol vs Diesel Distribution',
                       labels={'fuelType': 'Fuel Type', 'count': 'Number of Cars'},
-                      color='count',
-                      color_continuous_scale='Teal')
-        fig4.update_layout(template='plotly_dark')
+                      color='fuelType',
+                      color_discrete_map={'Petrol': '#636EFA', 'Diesel': '#EF553B'})
+        fig4.update_layout(template='plotly_dark', showlegend=False)
         st.plotly_chart(fig4, use_container_width=True)
