@@ -132,7 +132,9 @@ with col3:
                       title='🚗 Transmission Type vs Avg Price',
                       labels={'transmission': 'Transmission', 'price_converted': f'Avg Price ({symbol})'},
                       color='price_converted',
-                      color_continuous_scale='Blues')
+                      color_continuous_scale='Blues',
+                      text=trans_avg['price_converted'].apply(lambda x: f'{symbol}{x:,.0f}'))
+        fig3.update_traces(textposition='outside')
         fig3.update_layout(template='plotly_dark')
         st.plotly_chart(fig3, use_container_width=True)
 
@@ -145,6 +147,8 @@ with col4:
                       title='⛽ Petrol vs Diesel Distribution',
                       labels={'fuelType': 'Fuel Type', 'count': 'Number of Cars'},
                       color='fuelType',
-                      color_discrete_map={'Petrol': '#636EFA', 'Diesel': '#EF553B'})
+                      color_discrete_map={'Petrol': '#636EFA', 'Diesel': '#EF553B'},
+                      text='count')
+        fig4.update_traces(textposition='outside')
         fig4.update_layout(template='plotly_dark', showlegend=False)
         st.plotly_chart(fig4, use_container_width=True)
